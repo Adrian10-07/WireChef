@@ -1,4 +1,4 @@
-package com.example.wirechef.ui.theme
+package com.example.wirechef.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
