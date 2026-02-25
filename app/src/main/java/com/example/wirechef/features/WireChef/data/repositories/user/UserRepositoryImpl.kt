@@ -1,9 +1,10 @@
 package com.example.wirechef.features.WireChef.data.repositories.user
 import com.example.wirechef.features.WireChef.data.datasource.remote.mapper.user.toDomain
-import com.example.wirechef.features.WireChef.domain.entities.User
+import com.example.wirechef.features.WireChef.domain.entities.user.User
 import com.example.wirechef.features.WireChef.domain.repositories.user.UserRepository
 import com.example.wirechef.features.WireChef.data.datasource.remote.api.user.UserApi
 import android.util.Log
+import com.example.wirechef.features.WireChef.data.datasource.remote.models.user.UserRequestDto
 import javax.inject.Inject
 
 class UserRepositoryImpl@Inject constructor(
