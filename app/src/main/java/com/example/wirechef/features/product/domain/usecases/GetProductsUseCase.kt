@@ -10,11 +10,7 @@ class GetProductsUseCase @Inject constructor(
     suspend operator fun invoke(category: String? = null): Result<List<Product>> {
         return try {
             val products = repository.getProducts(category)
-            if (products.isEmpty()) {
-                Result.failure(Exception("No se encontraron productos"))
-            } else {
-                Result.success(products)
-            }
+            Result.success(products)
         } catch (e: Exception) {
             Result.failure(e)
         }
