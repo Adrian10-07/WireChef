@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.wirechef"
-    compileSdk = 36 // Sintaxis estándar limpia
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.wirechef"
