@@ -32,11 +32,15 @@ fun WireChefNavigation() {
                 }
             )
         }
-
         composable(AppScreens.WaiterMenu.route) {
-            WaiterMenuScreen()
+            WaiterMenuScreen(
+                onLogout = {
+                    navController.navigate(AppScreens.Login.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
+            )
         }
-
         composable(AppScreens.ChefDashboard.route) {
             ChefDashboardScreen()
         }
