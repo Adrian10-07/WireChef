@@ -4,20 +4,20 @@ coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.8.7"      # Actualizado para mejor compatibilidad
-activityCompose = "1.10.0"         # Actualizado
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.10.0"
 kotlin = "2.0.21"
-composeBom = "2025.01.00"          # Recomendado para AGP 9.x
-uiTextGoogleFonts = "1.7.8"        # Ajustado a la familia de Compose 1.7.x
+composeBom = "2025.01.00"
+uiTextGoogleFonts = "1.7.8"
 lifecycleViewmodelCompose = "2.8.7"
 retrofit = "2.11.0"
-converterGson = "2.11.0"           # DEBE ser igual a retrofit
+converterGson = "2.11.0"
 ioCoilVersion = "2.7.0"
-navigationCompose = "2.8.5"        # Versión estable para Kotlin 2.0
+navigationCompose = "2.8.5"
 iconsExtended = "1.7.8"
-hilt = "2.59.1"                      # Versión más estable para KSP y Kotlin 2.0
+hilt = "2.59.1"
 hiltNavigationCompose = "1.2.0"
-ksp = "2.0.21-1.0.26"              # Asegúrate de este match exacto
+ksp = "2.0.21-1.0.26"
 secretsGradle = "2.0.1"
 
 [libraries]
@@ -52,4 +52,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" } # ¡AGREGADO!
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
