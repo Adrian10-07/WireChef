@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.wirechef.features.order.presentation.components.CartItemRow
 import com.example.wirechef.features.order.presentation.components.ProductCard
 import com.example.wirechef.features.order.presentation.components.WaiterOrderCard
 import com.example.wirechef.features.order.presentation.viewmodels.WaiterViewModel
@@ -55,7 +56,7 @@ fun WaiterMenuScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFAFAFA))
+            .background(MaterialTheme.colorScheme.background)
             .systemBarsPadding()
     ) {
         Row(
@@ -171,13 +172,22 @@ fun MenuAndCartSection(
                 .padding(16.dp)
         ) {
             Column {
-                Text("Pedido Actual", fontWeight = FontWeight.Bold, fontSize = 18.sp, modifier = Modifier.padding(bottom = 8.dp))
+                Text("Pedido Actual", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color.White, modifier = Modifier.padding(bottom = 8.dp))
 
                 if (uiState.cart.isEmpty()) {
                     Text("No hay productos", color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
                 } else {
-                    LazyColumn(modifier = Modifier.heightIn(max = 150.dp)) {
+                    LazyColumn(modifier = Modifier.heightIn(max = 180.dp)) {
                         items(uiState.cart) { cartItem ->
+                            CartItemRow(
+                                item = cartItem,
+                                onNoteChange = { newNote ->
+                                    viewModel.removeFromCart(cartItem)
+                                    viewModel.addToCart(cartItem.product, newNote)
+                                },
+                                onRemove = { viewModel.removeFromCart(cartItem) }
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
                         }
                     }
                 }
