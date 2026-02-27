@@ -1,5 +1,6 @@
 package com.example.wirechef.features.order.presentation.viewmodels
 
+import com.example.wirechef.features.order.domain.entities.Order
 import com.example.wirechef.features.product.domain.entities.Product
 
 data class CartItem(
@@ -9,6 +10,7 @@ data class CartItem(
 )
 
 data class WaiterState(
+    val selectedTab: Int = 0,
     val waiterName: String = "Cargando...",
     val isLoggedOut: Boolean = false,
     val isLoadingProducts: Boolean = false,
@@ -21,7 +23,9 @@ data class WaiterState(
     val cart: List<CartItem> = emptyList(),
     val isSendingOrder: Boolean = false,
     val orderSendError: String? = null,
-    val orderSendSuccess: Boolean = false
+    val orderSendSuccess: Boolean = false,
+    val myOrders: List<Order> = emptyList(),
+    val isLoadingOrders: Boolean = false
 ) {
     // Propiedad calculada: La vista solo leerá "cartTotal" y ya tendrá el dinero exacto
     val cartTotal: Double

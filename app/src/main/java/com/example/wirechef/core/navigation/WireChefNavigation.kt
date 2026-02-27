@@ -42,7 +42,13 @@ fun WireChefNavigation() {
             )
         }
         composable(AppScreens.ChefDashboard.route) {
-            ChefDashboardScreen()
+            ChefDashboardScreen(
+                onLogoutClick = {
+                    navController.navigate(AppScreens.Login.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 }
