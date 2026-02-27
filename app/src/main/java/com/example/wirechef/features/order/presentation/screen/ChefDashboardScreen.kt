@@ -50,7 +50,7 @@ fun ChefDashboardScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Button(
-                onClick = { /* TODO: Lógica de perfil si aplica */ },
+                onClick = { /* wiii */ },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2C2C2C)),
                 shape = RoundedCornerShape(8.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
@@ -80,7 +80,7 @@ fun ChefDashboardScreen(
             }
         } else if (uiState.orders.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("No hay órdenes pendientes.", style = MaterialTheme.typography.bodyLarge)
+                Text("No hay órdenes pendientes.", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onBackground)
             }
         } else {
             LazyColumn(

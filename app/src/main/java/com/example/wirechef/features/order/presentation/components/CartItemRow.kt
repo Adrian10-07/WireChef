@@ -44,8 +44,8 @@ fun CartItemRow(item: CartItem, onNoteChange: (String) -> Unit, onRemove: () -> 
             shape = RoundedCornerShape(8.dp),
             singleLine = true,
             colors = OutlinedTextFieldDefaults.colors(
-                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
                 focusedContainerColor = Color(0xFF2A2A2A),
                 unfocusedContainerColor = Color(0xFF2A2A2A),
                 unfocusedBorderColor = Color(0xFF444444),
