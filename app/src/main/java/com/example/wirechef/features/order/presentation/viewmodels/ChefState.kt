@@ -6,5 +6,6 @@ data class ChefState(
     val orders: List<Order> = emptyList(),
     val isLoading: Boolean = true,
     val error: String? = null,
-    val isLoggedOut: Boolean = false
+    val isLoggedOut: Boolean = false,
+    val chefName: String = "Cargando..."
 )

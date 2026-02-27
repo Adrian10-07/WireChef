@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.wirechef.features.order.presentation.viewmodels.ChefViewModel
+import com.example.wirechef.core.ui.theme.*
 
 @Composable
 fun ChefDashboardScreen(
@@ -37,7 +38,7 @@ fun ChefDashboardScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFAFAFA))
+            .background(MaterialTheme.colorScheme.background)
             .systemBarsPadding()
     ) {
         Row(
@@ -56,7 +57,7 @@ fun ChefDashboardScreen(
             ) {
                 Icon(Icons.Default.Person, contentDescription = "Perfil", modifier = Modifier.size(18.dp), tint = Color.White)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Adrian", color = Color.White, fontSize = 14.sp)
+                Text(uiState.chefName, color = Color.White, fontSize = 14.sp)
             }
 
             Button(
@@ -90,7 +91,7 @@ fun ChefDashboardScreen(
                 items(uiState.orders) { order ->
                     Card(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
                         shape = RoundedCornerShape(16.dp)
                     ) {
@@ -105,26 +106,25 @@ fun ChefDashboardScreen(
                                     text = "Mesa ${order.tableNumber}",
                                     fontSize = 22.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = Color.Black
+                                    color = MaterialTheme.colorScheme.onSurface
                                 )
 
+                                val (statusText, badgeBg, badgeText) = when(order.status) {
+                                    "pending" -> Triple("En espera", PendingBackground, PendingText)
+                                    "preparing" -> Triple("Preparando", PreparingBackground, PreparingText)
+                                    "ready" -> Triple("Listo", ReadyBackground, ReadyText)
+                                    else -> Triple(order.status, Color(0xFFE0E0E0), Color.Black)
+                                }
                                 Surface(
-                                    color = Color(0xFFE0E0E0),
+                                    color = badgeBg,
                                     shape = RoundedCornerShape(16.dp)
                                 ) {
-                                    // Traducción visual del estado original
-                                    val statusText = when(order.status) {
-                                        "pending" -> "En espera"
-                                        "preparing" -> "Preparando"
-                                        "ready" -> "Listo"
-                                        else -> order.status
-                                    }
                                     Text(
                                         text = statusText,
                                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                                         fontSize = 12.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = Color.Black
+                                        color = badgeText
                                     )
                                 }
                             }
@@ -144,7 +144,7 @@ fun ChefDashboardScreen(
                                             text = "Producto ${item.productId} x${item.quantity}",
                                             fontSize = 18.sp,
                                             fontWeight = FontWeight.Medium,
-                                            color = Color.Black
+                                            color = MaterialTheme.colorScheme.onSurface
                                         )
                                     }
 
@@ -158,7 +158,7 @@ fun ChefDashboardScreen(
                                     }
 
                                     HorizontalDivider(
-                                        color = if (index == 0) Color(0xFF2196F3) else Color.Black,
+                                        color = if (index == 0) Color(0xFF2196F3) else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
                                         thickness = 1.dp
                                     )
                                 }
@@ -168,22 +168,34 @@ fun ChefDashboardScreen(
 
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.End,
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 if (order.status == "pending") {
-                                    OutlinedButton(
+                                    Button(
                                         onClick = { viewModel.updateOrderStatus(order.id, "preparing") },
-                                        modifier = Modifier.padding(end = 8.dp)
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = PendingBackground,
+                                            contentColor = PendingText
+                                        ),
+                                        shape = RoundedCornerShape(24.dp),
+                                        modifier = Modifier.weight(1f)
                                     ) {
-                                        Text("Preparar")
+                                        Text("Preparar", fontWeight = FontWeight.Bold)
                                     }
                                 }
-                                Button(
-                                    onClick = { viewModel.updateOrderStatus(order.id, "ready") },
-                                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
-                                ) {
-                                    Text("Listo para entregar", color = Color.White)
+                                if (order.status == "preparing") {
+                                    Button(
+                                        onClick = { viewModel.updateOrderStatus(order.id, "ready") },
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = Color.Black,
+                                            contentColor = Color.White
+                                        ),
+                                        shape = RoundedCornerShape(24.dp),
+                                        modifier = Modifier.weight(1f)
+                                    ) {
+                                        Text("Listo para entregar", fontWeight = FontWeight.Bold)
+                                    }
                                 }
                             }
                         }
