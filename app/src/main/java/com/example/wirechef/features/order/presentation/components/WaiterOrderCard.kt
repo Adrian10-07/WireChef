@@ -15,7 +15,6 @@ import com.example.wirechef.features.order.domain.entities.Order
 
 @Composable
 fun WaiterOrderCard(order: Order) {
-    // Colores basados en test.html
     val (statusText, statusBgColor, statusTextColor) = when (order.status) {
         "pending" -> Triple("En espera", Color(0xFFFFF3CD), Color(0xFF856404))
         "preparing" -> Triple("Preparando", Color(0xFFD1ECF1), Color(0xFF0C5460))
