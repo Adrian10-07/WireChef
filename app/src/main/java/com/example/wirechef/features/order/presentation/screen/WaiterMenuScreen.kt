@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -67,12 +68,16 @@ fun WaiterMenuScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = uiState.waiterName,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+            Button(
+                onClick = { },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2C2C2C)),
+                shape = RoundedCornerShape(8.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
+            ) {
+                Icon(Icons.Default.Person, contentDescription = "Perfil", modifier = Modifier.size(18.dp), tint = Color.White)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(uiState.waiterName, color = Color.White, fontSize = 14.sp)
+            }
             Button(
                 onClick = { viewModel.logout() },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2C2C2C)),
@@ -172,18 +177,17 @@ fun MenuAndCartSection(
                 .padding(16.dp)
         ) {
             Column {
-                Text("Pedido Actual", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color.White, modifier = Modifier.padding(bottom = 8.dp))
+                Text("Pedido Actual", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.padding(bottom = 8.dp))
 
                 if (uiState.cart.isEmpty()) {
                     Text("No hay productos", color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
                 } else {
                     LazyColumn(modifier = Modifier.heightIn(max = 180.dp)) {
-                        items(uiState.cart) { cartItem ->
+                        items(uiState.cart, key = { it.product.id }) { cartItem ->
                             CartItemRow(
                                 item = cartItem,
                                 onNoteChange = { newNote ->
-                                    viewModel.removeFromCart(cartItem)
-                                    viewModel.addToCart(cartItem.product, newNote)
+                                    viewModel.updateCartItemNote(cartItem.product, newNote)
                                 },
                                 onRemove = { viewModel.removeFromCart(cartItem) }
                             )

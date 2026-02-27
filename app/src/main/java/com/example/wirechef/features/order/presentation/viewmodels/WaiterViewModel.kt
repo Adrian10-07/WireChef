@@ -105,6 +105,16 @@ class WaiterViewModel @Inject constructor(
         }
     }
 
+    fun updateCartItemNote(product: Product, newNote: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                cart = currentState.cart.map { item ->
+                    if (item.product.id == product.id) item.copy(note = newNote) else item
+                }
+            )
+        }
+    }
+
     fun updateTableNumber(number: String) {
         if (number.all { it.isDigit() }) {
             _uiState.update { it.copy(tableNumberInput = number) }
@@ -174,7 +184,6 @@ class WaiterViewModel @Inject constructor(
         _uiState.update { it.copy(orderSendError = null) }
     }
 
-    //LÓGICA DE MIS PEDIDOS Y WEBSOCKETS
     private fun loadMyOrders() {
         val userId = sessionManager.getUserId()
         if (userId == -1) return
@@ -183,7 +192,6 @@ class WaiterViewModel @Inject constructor(
             _uiState.update { it.copy(isLoadingOrders = true) }
             val result = getOrdersUseCase()
             result.onSuccess { allOrders ->
-                // Filtramos para ver solo las órdenes creadas por este mesero específico
                 val waiterOrders = allOrders.filter { it.waiterId == userId }
                 _uiState.update { it.copy(myOrders = waiterOrders, isLoadingOrders = false) }
             }.onFailure {
@@ -203,7 +211,6 @@ class WaiterViewModel @Inject constructor(
         viewModelScope.launch {
             webSocketListener.messages.collect { messageJson ->
                 try {
-                    // Si recibimos una actualización de estado de la cocina, recargamos la lista
                     if (messageJson.contains("order_status_update")) {
                         loadMyOrders()
                     }

@@ -24,22 +24,18 @@ fun LoginScreen(
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-    // Variable para evitar doble navegación
     var hasNavigated by remember { mutableStateOf(false) }
 
-    // Usamos el uiState entero como llave, o mejor aún, observamos específicamente loggedUser
     LaunchedEffect(uiState.loggedUser) {
         if (uiState.loggedUser != null && !hasNavigated) {
-            hasNavigated = true // Marcamos como navegado
+            hasNavigated = true
 
             uiState.welcomeMessage?.let { msg ->
                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
             }
 
-            // Le damos un pequeñísimo delay opcional para que el Toast se alcance a mostrar
             delay(100)
 
-            // Llamamos al callback de navegación usando el role exacto del objeto user
             onLoginSuccess(uiState.loggedUser!!.role)
         }
     }
@@ -100,7 +96,6 @@ fun LoginScreen(
                 modifier = Modifier.padding(top = 8.dp)
             ) {
                 Button(
-                    // Aquí envías "waiter" explícitamente al ViewModel
                     onClick = { viewModel.login("waiter") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.secondary
@@ -112,7 +107,6 @@ fun LoginScreen(
                 }
 
                 Button(
-                    // Aquí envías "chef" explícitamente al ViewModel
                     onClick = { viewModel.login("chef") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
